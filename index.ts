@@ -16,7 +16,6 @@ app.use(express.static('static'))
 // ルーティング
 const router = express.Router()
 router.get('/play', (req: express.Request, res: express.Response) => {
-    console.log('START', req.method, req.url)
     if (fs.existsSync(PIDFILE)) {
         console.log(PIDFILE, 'exists => Ok')
         res.status(200) // Ok
@@ -25,10 +24,8 @@ router.get('/play', (req: express.Request, res: express.Response) => {
         res.status(404) // Not found
     }
     res.end()
-    console.log('END  ', req.method, req.url)
 })
 router.post('/play', (req: express.Request, res: express.Response) => {
-    console.log('START', req.method, req.url)
     if (fs.existsSync(PIDFILE)) {
         console.log(PIDFILE, 'exists => Conflict')
         res.status(409) // Conflict
@@ -41,10 +38,8 @@ router.post('/play', (req: express.Request, res: express.Response) => {
         res.status(201) // Created
     }
     res.end()
-    console.log('END  ', req.method, req.url)
 })
 router.delete('/play', (req: express.Request, res: express.Response) => {
-    console.log('START', req.method, req.url)
     if (fs.existsSync(PIDFILE)) {
         console.log('read pid from', PIDFILE)
         const pid = parseInt(fs.readFileSync(PIDFILE).toString())
@@ -58,7 +53,6 @@ router.delete('/play', (req: express.Request, res: express.Response) => {
         res.status(404) // Not found
     }
     res.end()
-    console.log('END  ', req.method, req.url)
 })
 app.use(router)
 
